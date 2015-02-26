@@ -122,11 +122,12 @@ Untagged images can be run using their IMAGE ID:
 $ docker run 9cfa3ba0eb6d samtools
 ```
 
-You can list only untagged images:
+You can list untagged images only:
 
 ```
 $ docker images -f "dangling=true" -q
-$ docker rmi $(docker images -f "dangling=true" -q) # nice way to remove untagged images 
+# a convenient command to remove untagged image
+$ docker rmi $(docker images -f "dangling=true" -q)
 ```
 
 Create a tagged image:
