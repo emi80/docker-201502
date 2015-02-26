@@ -2,7 +2,7 @@
 
 In the following tutorial we are going to play around with some Docker comands. For the purpose, we use an Ubuntu virtual machine with Docker up and running and some already installed images.
 
-## Course virtual machine
+## Start the virtual machine
 
 Open a terminal and boot up the virtual machine:
 
@@ -91,12 +91,6 @@ $ docker rm $(docker ps -a -q)
 $ docker rmi <image_id>
 ```
 
-Nice way to remove untagged images, i.e. images with no tag associated to them:
-
-```
-$ docker rmi $(docker images -f "dangling=true" -q)
-```
-
 ## Create images
 
 ### Interactive mode
@@ -106,11 +100,43 @@ $ docker run -t -i debian
 root@43270a6545e8:/# apt -get update
 root@43270a6545e8:/# apt -get install samtools
 root@43270a6545e8:/# exit
+$ docker ps -l
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+43270a6545e8        debian:latest       "/bin/bash"         9 minutes ago       Exited (0) 8 minutes ago                       stoic_archimedes    
+
+```
+
+The ``commit`` command will commit your hanges and create a new untagged image:
+
+```
 $ docker commit 43270a6545e8
 9cfa3ba0eb6d1ff63cebc20ee3f416d1ba98f399d717b47d762ecff1ba1808d6
 $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 <none>              <none>              9cfa3ba0eb6d        5 seconds ago       94.8 MB
+```
+
+Untagged images can be run using their IMAGE ID:
+
+```
+$ docker run 9cfa3ba0eb6d samtools
+```
+
+You can list only untagged images:
+
+```
+$ docker images -f "dangling=true" -q
+$ docker rmi $(docker images -f "dangling=true" -q) # nice way to remove untagged images 
+```
+
+Create a tagged image:
+
+```
+$ docker commit 43270a6545e8 interactive/samtools
+786acd6cdd9911385a29a78913bc2d191efab1b833bf01d7994941ce64f38256
+vagrant@vagrant-ubuntu-trusty-64:~/test-fd$ docker images
+REPOSITORY             TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+interactive/samtools   latest              786acd6cdd99        5 seconds ago       94.8 MB
 ```
 
 ### Use a Dockerfile
@@ -120,24 +146,20 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 
 #### Build
 
+To create an untagged image just run:
+
 ```
 $ mkdir test-build && cd test-build
 $ wget https://raw.githubusercontent.com/emi80/docker-201502/master/tutorial/Dockerfile
 $ docker build .
-```
-
-The above command will create an untagged image:
-```
 $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 <none>              <none>              5b401b00c9ac        38 seconds ago      86.44 MB
-$ docker run 5b401b00c9ac samtools
 ```
 
-You can create a tag image:
+Create a tagged image:
 
 ```
 $ docker build -t samtools . # also: ... -t myrepo/samtools:0.1.18 ...
-$ docker run samtools samtools 
 ```
 
