@@ -38,14 +38,14 @@ $ docker search grape
 #### Download images from the Docker hub
 
 ```
-$ docker pull grape/base
+$ docker pull debian
 ```
 
 #### Run a contatiner
 The ``run`` command will create and start a container based on the specified image.
 
 ```
-$ docker run grape/base env
+$ docker run debian env
 ```
 
 #### List containers
@@ -77,7 +77,7 @@ $ docker ps -l -q
 The ``rm`` command is used to remove Docker containers. Running containers cannot be removed unless ``-f`` option is used.
 
 ```
-$ docker rm <container id>
+$ docker rm <container_id>
 ```
 
 Using the ``ps`` command with ``-a`` and ``-q`` options is very usefull when you want to cleanup non-running containers:
@@ -85,8 +85,58 @@ Using the ``ps`` command with ``-a`` and ``-q`` options is very usefull when you
 $ docker rm $(docker ps -a -q)
 ```
 
-#### 
+#### Remove images
 
-## Dockerfile
+```
+$ docker rmi <image_id>
+```
 
-https://raw.githubusercontent.com/grape-pipeline/docker/master/base/Dockerfile
+Nice way to remove untagged images, i.e. images with no tag associated to them:
+
+```
+$ docker rmi $(docker images -f "dangling=true" -q)
+```
+
+## Create images interactively
+
+```
+$ docker run -t -i debian
+root@43270a6545e8:/# apt -get update
+root@43270a6545e8:/# apt -get install samtools
+root@43270a6545e8:/# exit
+$ docker commit 43270a6545e8
+9cfa3ba0eb6d1ff63cebc20ee3f416d1ba98f399d717b47d762ecff1ba1808d6
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+<none>              <none>              9cfa3ba0eb6d        5 seconds ago       94.8 MB
+```
+
+## Create images from a Dockerfile
+
+Dockerfiles:
+- [Simple example](Dockerfile)
+- [Dockerfile for grape/mapping-gem](https://github.com/grape-pipeline/docker/blob/master/mapping/gem/Dockerfile)
+
+#### Build
+
+```
+$ mkdir test-build && cd test-build
+$ wget https://raw.githubusercontent.com/emi80/docker-201502/master/tutorial/Dockerfile
+$ docker build .
+```
+
+The above command will create an untagged image:
+```
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+<none>              <none>              5b401b00c9ac        38 seconds ago      86.44 MB
+$ docker run 5b401b00c9ac samtools
+```
+
+You can create a tag image:
+
+```
+$ docker build -t samtools . # also: ... -t myrepo/samtools:0.1.18 ...
+$ docker run samtools samtools 
+```
+
