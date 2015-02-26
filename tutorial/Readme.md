@@ -20,7 +20,7 @@ Welcome to Ubuntu 14.04.1 LTS (GNU/Linux 3.13.0-43-generic x86_64)
 vagrant@vagrant-ubuntu-trusty-64:~$
 ```
 
-## Docker commands
+## Useful commands
 Here is a series of some useful Docker commands. Please check [Docker documentation](https://docs.docker.com/reference/commandline/cli/) for the complete list.
 
 #### Check downloaded images
@@ -97,7 +97,9 @@ Nice way to remove untagged images, i.e. images with no tag associated to them:
 $ docker rmi $(docker images -f "dangling=true" -q)
 ```
 
-## Create images interactively
+## Create images
+
+### Interactive mode
 
 ```
 $ docker run -t -i debian
@@ -111,9 +113,8 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 <none>              <none>              9cfa3ba0eb6d        5 seconds ago       94.8 MB
 ```
 
-## Create images from a Dockerfile
+### Use a Dockerfile
 
-Dockerfiles:
 - [Simple example](Dockerfile)
 - [Dockerfile for grape/mapping-gem](https://github.com/grape-pipeline/docker/blob/master/mapping/gem/Dockerfile)
 
