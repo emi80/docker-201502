@@ -7,7 +7,7 @@ In the following tutorial we are going to play around with some Docker comands. 
 Open a terminal and boot up the virtual machine:
 
 ```
-$ cd crg-course
+$ cd ~/crg-course
 $ vagrant up
 ```
 
