@@ -1,6 +1,6 @@
 # Docker tutorial
 
-In the following tutorial we are going to play around with some Docker comands. We use an Ubuntu virtual machine with Docker up and running and some already installed images.
+In the following tutorial we are going to play around with some Docker comands. For the purpose, we use an Ubuntu virtual machine with Docker up and running and some already installed images.
 
 ## Course virtual machine
 
