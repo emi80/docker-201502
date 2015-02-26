@@ -48,6 +48,22 @@ The ``run`` command will create and start a container based on the specified ima
 $ docker run debian env
 ```
 
+Open a bash session to a container:
+
+```
+$ docker run -t -i debian
+```
+
+You can mount host folders when you run a container:
+
+```
+$ mkdir test && touch test/my-file.txt
+$ docker run debian ls /data
+ls: cannot access /data: No such file or directory
+$ docker run -v $PWD/test:/data debian ls /data
+file.txt
+```
+
 #### List containers
 The ``ps`` command output a list of running containers. 
 
@@ -144,8 +160,6 @@ interactive/samtools   latest              786acd6cdd99        5 seconds ago    
 
 - [Simple example](Dockerfile)
 - [Dockerfile for grape/mapping-gem](https://github.com/grape-pipeline/docker/blob/master/mapping/gem/Dockerfile)
-
-#### Build
 
 To create an untagged image just run:
 
