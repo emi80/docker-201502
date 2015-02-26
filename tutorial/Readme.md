@@ -22,25 +22,25 @@ vagrant@vagrant-ubuntu-trusty-64:~$
 
 ## Docker commands
 
-### Check installed images
+#### Check installed images
 
 ```
 $ docker images
 ```
 
-### Search the Docker hub
+#### Search the Docker hub
 
 ```
 $ docker search grape
 ```
 
-### Download images from the Docker hub
+#### Download images from the Docker hub
 
 ```
 $ docker pull grape/base
 ```
 
-### Run a contatiner
+#### Run a contatiner
 The run command will create and start a container based on the specified image.
 
 ```
