@@ -21,9 +21,9 @@ vagrant@vagrant-ubuntu-trusty-64:~$
 ```
 
 ## Docker commands
-Here is a series of some useful Docker commands. PLease check [Docker documentation](https://docs.docker.com/reference/commandline/cli/) for the complete list.
+Here is a series of some useful Docker commands. Please check [Docker documentation](https://docs.docker.com/reference/commandline/cli/) for the complete list.
 
-#### Check installed images
+#### Check downloaded images
 
 ```
 $ docker images
@@ -67,9 +67,26 @@ If you only want to see container ids you can use the ``-q`` option:
 $ docker ps -q
 ```
 
-The combination of ``-a`` and ``-q`` options is very usefull when you want to cleanup non-running containers:
+To get the id of the latest executed container:
+
+```
+$ docker ps -l -q
+```
+
+#### Remove containers
+The ``rm`` command is used to remove Docker containers. Running containers cannot be removed unless ``-f`` option is used.
+
+```
+$ docker rm <container id>
+```
+
+Using the ``ps`` command with ``-a`` and ``-q`` options is very usefull when you want to cleanup non-running containers:
 ```
 $ docker rm $(docker ps -a -q)
 ```
 
-Docker will conveniently fail to delete running containers and report the error while the stopped ones will be deleted.
+#### 
+
+## Dockerfile
+
+https://raw.githubusercontent.com/grape-pipeline/docker/master/base/Dockerfile
